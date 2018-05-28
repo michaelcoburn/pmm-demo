@@ -4,7 +4,7 @@ set -o xtrace
 
 DBNAME=innodb
 ENGINE=innodb
-TABLE_SIZE=100000
+TABLE_SIZE=10000000
 TEST=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua
 SOCKET=${1:-/var/run/mysqld/mysqld.sock}
 RATE=1000
