@@ -4,9 +4,12 @@ set -o xtrace
 
 DBNAME=innodb
 ENGINE=innodb
-TABLE_SIZE=100000000
+TABLE_SIZE=100000
 TEST=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua
-SOCKET=${1:-/var/lib/mysql/mysql.sock}
+SOCKET=${1:-/var/run/mysqld/mysqld.sock}
+RATE=1
+THREADS=1
+TIME=300
 
 if [ -S "$SOCKET" ]; then
     CONNECTION="--socket=$SOCKET"
@@ -33,22 +36,25 @@ sysbench \
     prepare
 
 while true; do
-    sysbench \
-        $SB_CONNECTION \
-        --rate=20 \
-        --threads=64 \
-        --report-interval=10 \
-        --time=0 \
-        --events=0 \
-        --rand-type=pareto \
-        --db-driver=mysql \
-        --mysql-user=sbtest \
-        --mysql-password=sbtest \
-        --mysql-db=$DBNAME \
-        --mysql-table-engine=$ENGINE \
-        --oltp-reconnect \
-        --oltp-table-size=$TABLE_SIZE \
-        $TEST \
-        run
+    for rand_type in uniform gaussian special pareto; do
+        pmm-admin annotate "Distribution: $rand_type"
+        sysbench \
+            $SB_CONNECTION \
+            --rate=$RATE \
+            --threads=$THREADS \
+            --report-interval=10 \
+            --time=$TIME \
+            --events=0 \
+            --rand-type=$rand_type \
+            --db-driver=mysql \
+            --mysql-user=sbtest \
+            --mysql-password=sbtest \
+            --mysql-db=$DBNAME \
+            --mysql-table-engine=$ENGINE \
+            --oltp-reconnect \
+            --oltp-table-size=$TABLE_SIZE \
+            $TEST \
+            run
+        done
     sleep 60
 done
