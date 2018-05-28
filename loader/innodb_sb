@@ -7,9 +7,9 @@ ENGINE=innodb
 TABLE_SIZE=10000000
 TEST=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua
 SOCKET=${1:-/var/run/mysqld/mysqld.sock}
-RATE=1000
+RATE=500
 THREADS=100
-TIME=1800
+DURATION=1800
 
 if [ -S "$SOCKET" ]; then
     CONNECTION="--socket=$SOCKET"
@@ -43,7 +43,7 @@ while true; do
             --rate=$RATE \
             --threads=$THREADS \
             --report-interval=10 \
-            --time=$TIME \
+            --time=$DURATION \
             --events=0 \
             --rand-type=$rand_type \
             --db-driver=mysql \
@@ -55,6 +55,6 @@ while true; do
             --oltp-table-size=$TABLE_SIZE \
             $TEST \
             run
+        sleep 60
         done
-    sleep 60
 done
