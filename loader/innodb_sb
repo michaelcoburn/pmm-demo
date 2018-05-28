@@ -9,7 +9,7 @@ TEST=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua
 SOCKET=${1:-/var/run/mysqld/mysqld.sock}
 RATE=1000
 THREADS=100
-TIME=300
+TIME=1800
 
 if [ -S "$SOCKET" ]; then
     CONNECTION="--socket=$SOCKET"
