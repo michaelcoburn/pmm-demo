@@ -37,7 +37,7 @@ sysbench \
 
 while true; do
     for rand_type in uniform gaussian special pareto; do
-        pmm-admin annotate "Distribution: $rand_type"
+        pmm-admin annotate "Distribution: $rand_type" --tags "$rand_type"
         sysbench \
             $SB_CONNECTION \
             --rate=$RATE \
