@@ -59,8 +59,8 @@ create_loader() {
 
 main() {
     local TYPE=$1
-    local SOCKET_PATH=/var/run/postgresql/.s.PGSQL.5432
-    local SOCKET_NAME=$(basename $SOCKET_PATH | sed -e 's/[.]s[.].*//')
+    local SOCKET_PATH=/var/run/gssproxy.sock
+    local SOCKET_NAME=$(basename $SOCKET_PATH | sed -e 's/[.].*//')
 
     if [[ -z "$TYPE" ]] || [[ -z "${SERVICES[$TYPE]}" ]]; then
         echo "unknown server type"
@@ -82,9 +82,9 @@ main() {
     remove_all "$SOCKET_NAME"
 
 #    mysql $CONNECTION < $ROOT_DIR/grants.sql
-#    for LOADER in ${SERVICES[$TYPE]}; do
-#        create_loader "$LOADER" "$SOCKET_PATH" "$SOCKET_NAME"
-#    done
+    for LOADER in ${SERVICES[$TYPE]}; do
+        create_loader "$LOADER" "$SOCKET_PATH" "$SOCKET_NAME"
+    done
 }
 
 main "$@"

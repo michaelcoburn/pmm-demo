@@ -2,7 +2,7 @@
 
 set -o xtrace
 
-DBNAME=oltp
+DBNAME=percona
 ENGINE=percona
 TABLE_SIZE=1000
 TEST=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua
@@ -16,13 +16,8 @@ else
     SB_CONNECTION="--mysql-host=$SOCKET"
 fi
 
-mysql \
-    $CONNECTION \
-    --user=sbtest \
-    --password=sbtest \
     -e "CREATE DATABASE IF NOT EXISTS $DBNAME"
 sysbench \
-    $SB_CONNECTION \
     --db-driver=pgsql \
     --pgsql-host=localhost \
     --pgsql-user=sbtest \
@@ -34,7 +29,6 @@ sysbench \
 
 while true; do
     sysbench \
-        $SB_CONNECTION \
         --rate=1 \
         --threads=1 \
         --report-interval=10 \
