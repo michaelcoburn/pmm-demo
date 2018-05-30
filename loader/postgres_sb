@@ -1,0 +1,54 @@
+#!/bin/sh
+
+set -o xtrace
+
+DBNAME=oltp
+ENGINE=percona
+TABLE_SIZE=1000
+TEST=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua
+#SOCKET=${1:-/var/lib/mysql/mysql.sock}
+
+if [ -S "$SOCKET" ]; then
+    CONNECTION="--socket=$SOCKET"
+    SB_CONNECTION="--mysql-socket=$SOCKET"
+else
+    CONNECTION="--host=$SOCKET"
+    SB_CONNECTION="--mysql-host=$SOCKET"
+fi
+
+mysql \
+    $CONNECTION \
+    --user=sbtest \
+    --password=sbtest \
+    -e "CREATE DATABASE IF NOT EXISTS $DBNAME"
+sysbench \
+    $SB_CONNECTION \
+    --db-driver=pgsql \
+    --pgsql-host=localhost \
+    --pgsql-user=sbtest \
+    --pgsql-password=sbtest \
+    --pgsql-db=$DBNAME \
+    --oltp-table-size=$TABLE_SIZE \
+    $TEST \
+    prepare
+
+while true; do
+    sysbench \
+        $SB_CONNECTION \
+        --rate=1 \
+        --threads=1 \
+        --report-interval=10 \
+        --time=0 \
+        --events=0 \
+        --rand-type=pareto \
+        --db-driver=pgsql \
+        --pgsql-host=localhost \
+        --pgsql-user=sbtest \
+        --pgsql-password=sbtest \
+        --syql-db=$DBNAME \
+        --oltp-reconnect \
+        --oltp-table-size=$TABLE_SIZE \
+        $TEST \
+        run
+    sleep 60
+done

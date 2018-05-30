@@ -17,6 +17,7 @@ declare -A SERVICES=(
     ["pxc57-2"]="innodb_sb_2 innodb_sb_spike_2 innodb_extra_2"
     ["pxc57-3"]="innodb_sb_3 innodb_sb_spike_3 innodb_extra_3 cluster_mess"
     ["psrocksdb"]="innodb_sb innodb_sb_spike innodb_extra small_sb small_extra rocksdb_sb rocksdb_extra"
+    ["pg10"]="postgres_sb"
 )
 
 ROOT_DIR=$(realpath "$(dirname $0)")
