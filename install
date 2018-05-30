@@ -81,10 +81,10 @@ main() {
 
     remove_all "$SOCKET_NAME"
 
-    mysql $CONNECTION < $ROOT_DIR/grants.sql
-    for LOADER in ${SERVICES[$TYPE]}; do
-        create_loader "$LOADER" "$SOCKET_PATH" "$SOCKET_NAME"
-    done
+#    mysql $CONNECTION < $ROOT_DIR/grants.sql
+#    for LOADER in ${SERVICES[$TYPE]}; do
+#        create_loader "$LOADER" "$SOCKET_PATH" "$SOCKET_NAME"
+#    done
 }
 
 main "$@"
