@@ -59,7 +59,7 @@ create_loader() {
 
 main() {
     local TYPE=$1
-    local SOCKET_PATH=blah
+    local SOCKET_PATH=/tmp/michael
     local SOCKET_NAME=$(basename $SOCKET_PATH | sed -e 's/[.].*//')
 
     if [[ -z "$TYPE" ]] || [[ -z "${SERVICES[$TYPE]}" ]]; then
