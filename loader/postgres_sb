@@ -16,7 +16,6 @@ else
     SB_CONNECTION="--mysql-host=$SOCKET"
 fi
 
-    -e "CREATE DATABASE IF NOT EXISTS $DBNAME"
 sysbench \
     --db-driver=pgsql \
     --pgsql-host=localhost \
