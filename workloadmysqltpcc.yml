@@ -1,0 +1,47 @@
+---
+# PMM Demo Workload Generator
+- hosts: ps57
+
+  vars:
+    percona_workload_generator_directory_tpcc: /opt/percona/tpcc
+
+  tasks:
+    - name: Ensure directory is present for PMM Demo Workload generator
+      file: 
+        path: "{{ percona_workload_generator_directory_tpcc }}"
+        mode: 0755
+        state: directory
+    - name: Download and Extract Percona TPCC sysbench tool from github.com/Percona-Lab/sysbench-tpcc
+      unarchive:
+        src: https://github.com/Percona-Lab/sysbench-tpcc/archive/v2.2.tar.gz
+        dest: "{{ percona_workload_generator_directory_tpcc }}"
+        remote_src: yes
+
+# Configure MySQL users required for PMM Demo Workload Generator for MySQL
+# sbtest@localhost
+    - mysql_user:
+        name: tpcc
+        password: tpcc
+        host: localhost
+        priv: '*.*:ALL'
+        state: present
+        login_user: root
+        login_password: percona
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+# sbtest@10.
+    - mysql_user:
+        name: tpcc
+        password: tpcc
+        host: '10.%'
+        priv: '*.*:ALL'
+        state: present
+    - mysql_db:
+        name: tpcc
+        state: present
+     
+    - name: Load the PMM Demo TPCC Workload generator
+      shell: "{{ percona_workload_generator_directory_tpcc }}/sysbench-tpcc-2.2/tpcc.lua --mysql-socket=/var/run/mysqld/mysqld.sock --mysql-user=tpcc --mysql-password=tpcc --mysql-db=tpcc --time=300 --threads=10 --report-interval=1 --tables=10 --scale=1 --db-driver=mysql prepare"
+    - name: Run the PMM Demo TPCC Workload generator
+      shell: "{{ percona_workload_generator_directory_tpcc }}/sysbench-tpcc-2.2/tpcc.lua --mysql-socket=/var/run/mysqld/mysqld.sock --mysql-user=tpcc --mysql-password=tpcc --mysql-db=tpcc --time=300 --threads=10 --report-interval=10 --tables=10 --scale=1 --db-driver=mysql run"
+    - name: Advertise that Workload was re-generated
+      shell: "pmm-admin annotate 'Deployed latest PMM Demo Workload Generator TPCC from github.com/Percona-Lab/sysbench-tpcc' --tags 'deploy,TPCC'"

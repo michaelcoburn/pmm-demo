@@ -1,0 +1,16 @@
+---
+- hosts: mysql57
+  vars:
+    mysql_repo_rpm_url: http://repo.mysql.com/mysql57-community-release-el7.rpm
+    mysql_root_pass: percona
+  roles:
+    - { role: rchouinard.mysql-community-repo }
+    - { role: rchouinard.mysql-community }
+
+- hosts: mysql80
+  vars:
+    mysql_repo_rpm_url: http://repo.mysql.com/mysql80-community-release-el7.rpm
+    mysql_root_pass: percona
+  roles:
+    - { role: rchouinard.mysql-community-repo }
+    - { role: rchouinard.mysql-community }

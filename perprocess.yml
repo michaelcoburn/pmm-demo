@@ -1,0 +1,11 @@
+---
+- hosts: mysqlservers
+
+  tasks:
+    - name: Install Process Exporter from github.com/ncabatoff/process-exporter
+      yum:
+        name: https://github.com/ncabatoff/process-exporter/releases/download/v0.2.11/process-exporter_0.2.11_linux_amd64.rpm
+        state: present
+    - systemd: state=started name=process-exporter
+    - name: Add exporter to PMM
+      shell: 'pmm-admin add external:service processes-{{ ansible_hostname }} --service-port=9256 --interval=10s'

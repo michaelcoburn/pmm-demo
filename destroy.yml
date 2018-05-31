@@ -1,0 +1,39 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    droplets:
+    # Percona Server for MySQL
+    - { name: ps55, group: "mysqlservers" }
+    - { name: ps56, group: "mysqlservers" }
+    - { name: ps57, group: "mysqlservers" }
+    - { name: ps57slave, group: "mysqlservers" }
+    - { name: ps57tokudb, group: "mysqlservers" }
+    #- { name: ps57myrocks, group: "mysqlservers" }
+    # PMM Server
+    - { name: pmmserver, group: "pmmservers", size: 's-4vcpu-8gb' }
+    # PXC
+    #- { name: pxc57-1, group: "mysqlservers", image_id: 'ubuntu-14-04-x64' }
+    #- { name: pxc57-2, group: "mysqlservers", image_id: 'ubuntu-14-04-x64' }
+    #- { name: pxc57-3, group: "mysqlservers", image_id: 'ubuntu-14-04-x64' }
+    # ProxySQL
+    #- { name: proxysql, group:  "proxysqlservers" }
+    # MariaDB
+    - { name: mariadb103, group: "mysqlservers" }
+    # MySQL Community
+    - { name: mysql57, group: "mysqlservers" }
+    - { name: mysql80, group: "mysqlservers" }
+    # Run the PostgreSQL playbook
+    - { name: pg10, group: "postgresqlservers" }
+ 
+  tasks:
+    - name: Destroy DigitalOcean droplets.
+      digital_ocean:
+        state: "{{ item.state | default('absent') }}"
+        command: droplet
+        name: "{{ item.name }}"
+        unique_name: yes
+        wait: no
+      register: deleted_droplets
+      with_items: "{{ droplets }}"

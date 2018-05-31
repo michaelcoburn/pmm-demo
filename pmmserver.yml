@@ -1,0 +1,15 @@
+---
+# PMM Server
+
+- hosts: pmmserver
+
+  vars:
+    pmm_server_version: latest
+    pmm_server_ENABLE_PROTECTION: true
+    pmm_server_username: percona
+    pmm_server_password: percona
+    docker_install_compose: false
+
+  roles:
+    - geerlingguy.docker
+    - chrissam.pmm-server
