@@ -1,4 +1,0 @@
----
-- hosts: mariadb103
-  roles:
-    - { role: pcextreme.mariadb }

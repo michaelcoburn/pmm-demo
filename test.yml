@@ -1,4 +1,0 @@
----
-- import_playbook: deploy.yml
-- import_playbook: postgresql.yml
-- import_playbook: workloadpostgresql.yml

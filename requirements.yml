@@ -1,4 +1,0 @@
----
-#- src: ben.mildren.percona_mysql
-- src: geerlingguy.docker
-  src: geerlingguy.repo-epel
