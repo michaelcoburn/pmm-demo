@@ -1,0 +1,30 @@
+---
+# Percona Server for MySQL 5.5-latest
+- hosts: ps55
+  roles:
+    - { role: percona_mysql, percona_mysql_server_version: 55 }
+
+# Percona Server for MySQL 5.6-latest
+- hosts: ps56
+  roles:
+    - { role: percona_mysql, percona_mysql_server_version: 56 }
+
+# Percona Server for MySQL 5.7-latest
+- hosts: ps57
+  roles:
+    - { role: percona_mysql, percona_mysql_server_version: 57 }
+
+# Percona Server for MySQL 5.7-latest with TokuDB
+- hosts: ps57tokudb
+  roles:
+    - { role: percona_mysql, percona_mysql_server_version: 57, percona_mysql_include_tokudb_variables: true }
+
+# Percona Server for MySQL 5.7-latest Slave of ps57
+- hosts: ps57slave
+  roles: 
+    - { role: percona_mysql, percona_mysql_server_version: 57 }
+
+# Percona Server for MySQL 5.7-latest with MyRocks
+#- hosts: ps57myrocks
+#  roles:
+#    - { role: percona_mysql, percona_mysql_include_myrocks_variables: true }
