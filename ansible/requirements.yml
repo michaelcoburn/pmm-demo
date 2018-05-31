@@ -1,4 +1,15 @@
 ---
 #- src: ben.mildren.percona_mysql
+#- src: michaelcoburn.percona_mysql
 - src: geerlingguy.docker
   src: geerlingguy.repo-epel
+  src: geerlingguy.ntp
+  src: geerlingguy.mysql
+  src: geerlingguy.postgresql
+  src: chrissam.pmm-client
+  src: chrissam.pmm-server
+  src: pcextreme.mariadb
+  #src: tkuhlman.percona
+  src: rchouinard.mysql-community-repo
+  src: rchouinard.mysql-community
+  src: linuxhq.selinux
