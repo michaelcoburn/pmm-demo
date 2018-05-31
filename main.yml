@@ -1,0 +1,45 @@
+---
+# Deploy the hosts as defined in deploy.yml
+- import_playbook: deploy.yml
+
+# Base image details
+- import_playbook: baseimage.yml
+
+# Run the Percona Server for MySQL playbook
+#- import_playbook: psmysql.yml
+
+# Run the PMM Server playbook
+- import_playbook: pmmserver.yml
+
+# Run the pmm-client playbook
+#- import_playbook: pmmclient.yml
+
+# Run the PXC playbook
+#- import_playbook: pxc.yml
+
+# Run the ProxySQL playbook
+#- import_playbook: proxysql.yml
+
+# Run the MariaDB playbook
+- import_playbook: mariadb.yml
+
+# Run the MySQL Replication playbook
+#- import_playbook: mysqlreplication.yml
+
+# Run the PMM Demo Workload Generator for MySQL
+#- import_playbook: workloadmysqloltp.yml
+
+# Run the PostgreSQL playbook
+- import_playbook: postgresql.yml
+
+# Run the PMM Demo Workload Generator for PostgreSQL
+#- import_playbook: workloadpostgresql.yml
+
+# Run the Percona Server for MongoDB 3.6 playbook
+#- import_playbook: psmdb.yml
+
+# Run the MongoDB 3.6 playbook
+#- import_playbook: mongodb.yml
+
+# Run the PMM Demo Workload Generator for MongoDB
+#- import_playbook: workloadmongodb.yml
