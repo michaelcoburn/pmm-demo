@@ -7,8 +7,8 @@ ENGINE=innodb
 TABLE_SIZE=10000000
 TEST=/usr/share/sysbench/tests/include/oltp_legacy/oltp.lua
 SOCKET=${1:-/var/run/mysqld/mysqld.sock}
-RATE=500
-THREADS=100
+RATE=1
+THREADS=1
 DURATION=1800
 
 if [ -S "$SOCKET" ]; then
