@@ -8,12 +8,13 @@
     # Percona Server for MySQL
     #- { name: ps55, group: "mysqlservers" }
     #- { name: ps56, group: "mysqlservers" }
-    #- { name: ps57, group: "mysqlservers", size: 's-4vcpu-8gb' }
+    - { name: ps57, group: "mysqlservers", size: 's-4vcpu-8gb' }
     #- { name: ps57slave, group: "mysqlservers" }
     #- { name: ps57tokudb, group: "mysqlservers" }
     #- { name: ps57myrocks, group: "mysqlservers" }
+    - { name: ps80, group: "mysqlservers", size: 's-4vcpu-8gb' }
     # PMM Server
-    #- { name: pmmserver, group: "pmmservers", size: 's-4vcpu-8gb' }
+    - { name: pmmserver, group: "pmmservers", size: 's-4vcpu-8gb' }
     # PXC
     #- { name: pxc57-1, group: "mysqlservers", image_id: 'ubuntu-14-04-x64' }
     #- { name: pxc57-2, group: "mysqlservers", image_id: 'ubuntu-14-04-x64' }
@@ -26,7 +27,7 @@
     #- { name: mysql57, group: "mysqlservers" }
     #- { name: mysql80, group: "mysqlservers" }
     # Run the PostgreSQL playbook
-    - { name: pg10, group: "postgresqlservers" }
+    #- { name: pg10, group: "postgresqlservers" }
     # Run the Percona Server for MongoDB 3.6 playbook
     # Run the MongoDB 3.6 playbook
 
