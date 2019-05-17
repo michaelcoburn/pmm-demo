@@ -24,4 +24,4 @@
         state: present
 
   roles:
-    - chrissam.pmm-client
+    - michaelcoburn.pmm-client
